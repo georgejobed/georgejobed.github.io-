@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Replace george-j-obed with your GitHub username
+Sitemap: https://george-j-obed.github.io/sitemap.xml
