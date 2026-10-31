@@ -70,9 +70,9 @@
       en: "George is based in Trondheim, Norway, where he studies at NTNU, and carries out his fieldwork in Dodoma, central Tanzania. <a href=\"#globe-section\">Spin the globe</a> to see all his research and presentation sites.",
       sw: "George yuko Trondheim, Norwei, anakosomea NTNU, na hufanya kazi zake za shambani Dodoma, katikati ya Tanzania. <a href=\"#globe-section\">Zungusha dunia</a> kuona maeneo yote ya utafiti na mawasilisho yake." },
 
-    { id: "contact", kw: ["contact", "email", "e-mail", "reach", "linkedin", "collaborate", "collaboration", "connect", "message", "mawasiliano", "wasiliana", "barua pepe", "shirikiana", "ushirikiano", "ujumbe", "wasiliana", "mpata"],
-      en: "You can email George at <a href=\"mailto:georgeob@ntnu.stud.no\">georgeob@ntnu.stud.no</a>, connect on <a href=\"https://www.linkedin.com/in/george-obed-32145a1a6\" target=\"_blank\" rel=\"noopener\">LinkedIn</a>, or use the <a href=\"#contact\">contact form</a>.",
-      sw: "Unaweza kumtumia George barua pepe kupitia <a href=\"mailto:georgeob@ntnu.stud.no\">georgeob@ntnu.stud.no</a>, kuungana naye <a href=\"https://www.linkedin.com/in/george-obed-32145a1a6\" target=\"_blank\" rel=\"noopener\">LinkedIn</a>, au kutumia <a href=\"#contact\">fomu ya mawasiliano</a>." },
+    { id: "contact", kw: ["contact", "email", "e-mail", "orcid", "reach", "linkedin", "collaborate", "collaboration", "connect", "message", "mawasiliano", "wasiliana", "barua pepe", "shirikiana", "ushirikiano", "ujumbe", "wasiliana", "mpata"],
+      en: "You can email George at <a href=\"mailto:georgeobed999@gmail.com\">georgeobed999@gmail.com</a>, connect on <a href=\"https://www.linkedin.com/in/george-obed-32145a1a6\" target=\"_blank\" rel=\"noopener\">LinkedIn</a>, or use the <a href=\"#contact\">contact form</a>. His ORCID iD is <a href=\"https://orcid.org/0009-0000-3671-7220\" target=\"_blank\" rel=\"noopener\">0009-0000-3671-7220</a>.",
+      sw: "Unaweza kumtumia George barua pepe kupitia <a href=\"mailto:georgeobed999@gmail.com\">georgeobed999@gmail.com</a>, kuungana naye <a href=\"https://www.linkedin.com/in/george-obed-32145a1a6\" target=\"_blank\" rel=\"noopener\">LinkedIn</a>, au kutumia <a href=\"#contact\">fomu ya mawasiliano</a>. Namba yake ya ORCID ni <a href=\"https://orcid.org/0009-0000-3671-7220\" target=\"_blank\" rel=\"noopener\">0009-0000-3671-7220</a>." },
 
     { id: "cv", kw: ["cv", "resume", "curriculum", "download"],
       en: "You can <a href=\"assets/cv.pdf\" target=\"_blank\" rel=\"noopener\">download George's CV here</a>.",
@@ -92,8 +92,8 @@
   ];
 
   const FALLBACK = {
-    en: "I'm not sure about that one. I can answer questions about George's research, publications, teaching and outreach, education, memberships, or how to contact him. For anything else, please email <a href=\"mailto:georgeob@ntnu.stud.no\">georgeob@ntnu.stud.no</a>.",
-    sw: "Sina uhakika na hilo. Ninaweza kujibu maswali kuhusu utafiti wa George, machapisho, ufundishaji na ugani, elimu, uanachama, au jinsi ya kuwasiliana naye. Kwa mengine, tafadhali tuma barua pepe kwa <a href=\"mailto:georgeob@ntnu.stud.no\">georgeob@ntnu.stud.no</a>."
+    en: "I'm not sure about that one. I can answer questions about George's research, publications, teaching and outreach, education, memberships, or how to contact him. For anything else, please email <a href=\"mailto:georgeobed999@gmail.com\">georgeobed999@gmail.com</a>.",
+    sw: "Sina uhakika na hilo. Ninaweza kujibu maswali kuhusu utafiti wa George, machapisho, ufundishaji na ugani, elimu, uanachama, au jinsi ya kuwasiliana naye. Kwa mengine, tafadhali tuma barua pepe kwa <a href=\"mailto:georgeobed999@gmail.com\">georgeobed999@gmail.com</a>."
   };
   const SUGGEST = {
     en: [["Who is George?", "who"], ["Research", "research"], ["House crow project", "crow"], ["Publications", "pubs"], ["Teaching & outreach", "teach"], ["Contact", "contact"]],

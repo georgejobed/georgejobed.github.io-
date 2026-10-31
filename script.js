@@ -580,5 +580,79 @@ if (track) {
   update();
 }
 
+
+// ---------------------------------------------------------
+// 15. MOVING RIBBONS (research interests, partners)
+//     The list is copied once so it can loop without a gap.
+// ---------------------------------------------------------
+document.querySelectorAll("[data-marquee]").forEach(track => {
+  [...track.children].forEach(li => {
+    const c = li.cloneNode(true);
+    c.setAttribute("aria-hidden", "true");
+    c.removeAttribute("data-i18n");
+    track.appendChild(c);
+  });
+  track.style.setProperty("--dur", Math.max(30, track.children.length * 3.2) + "s");
+});
+// keep the copied chips in the visitor's language
+window.onLangChange(() => {
+  document.querySelectorAll("[data-marquee]").forEach(track => {
+    const items = [...track.children], half = items.length / 2;
+    for (let i = 0; i < half; i++) items[i + half].innerHTML = items[i].innerHTML;
+  });
+});
+
+// ---------------------------------------------------------
+// 16. SLIDING PHOTO GALLERY
+// ---------------------------------------------------------
+(function carousel() {
+  const box = document.getElementById("carousel");
+  if (!box) return;
+  const track = document.getElementById("carTrack");
+  const slides = [...track.children];
+  const dots = document.getElementById("carDots");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let index = 0, timer = null, hovering = false, visible = false;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement("button");
+    d.type = "button"; d.setAttribute("aria-label", (i + 1) + " / " + slides.length);
+    d.addEventListener("click", () => { go(i); restart(); });
+    dots.appendChild(d);
+  });
+  function go(i) {
+    index = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    [...dots.children].forEach((d, j) => d.classList.toggle("active", j === index));
+    const next = slides[(index + 1) % slides.length].querySelector("img");
+    if (next) next.loading = "eager";           // load the next photo in advance
+  }
+  function play() { stop(); if (!reduce && visible && !hovering && lb.hidden) timer = setInterval(() => go(index + 1), 5000); }
+  function stop() { clearInterval(timer); timer = null; }
+  function restart() { play(); }
+  document.getElementById("carPrev").addEventListener("click", () => { go(index - 1); restart(); });
+  document.getElementById("carNext").addEventListener("click", () => { go(index + 1); restart(); });
+  box.addEventListener("mouseenter", () => { hovering = true; stop(); });
+  box.addEventListener("mouseleave", () => { hovering = false; play(); });
+  box.addEventListener("keydown", e => {
+    if (e.key === "ArrowLeft") { go(index - 1); restart(); }
+    if (e.key === "ArrowRight") { go(index + 1); restart(); }
+  });
+
+  // swipe with a finger or mouse
+  let x0 = null, swiped = false;
+  track.addEventListener("pointerdown", e => { x0 = e.clientX; swiped = false; });
+  track.addEventListener("pointerup", e => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0; x0 = null;
+    if (Math.abs(dx) > 45) { swiped = true; go(index + (dx < 0 ? 1 : -1)); restart(); }
+  });
+  track.addEventListener("click", e => { if (swiped) { e.stopPropagation(); e.preventDefault(); swiped = false; } }, true);
+
+  new IntersectionObserver(en => { visible = en[0].isIntersecting; visible ? play() : stop(); }, { threshold: 0.3 }).observe(box);
+  new MutationObserver(() => (lb.hidden ? play() : stop())).observe(lb, { attributes: true, attributeFilter: ["hidden"] });
+  go(0);
+})();
+
 // Apply the saved language last (after everything is built)
 applyLang();

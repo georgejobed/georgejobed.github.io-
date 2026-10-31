@@ -4,8 +4,9 @@
 // Each topic has extra keywords (words visitors might type) and answers.
 // =========================================================
 (function () {
-  const MAIL = '<a href="mailto:georgeob@ntnu.stud.no">georgeob@ntnu.stud.no</a>';
+  const MAIL = '<a href="mailto:georgeobed999@gmail.com">georgeobed999@gmail.com</a>';
   const LI = '<a href="https://www.linkedin.com/in/george-obed-32145a1a6" target="_blank" rel="noopener">LinkedIn</a>';
+  const OR = '<a href="https://orcid.org/0009-0000-3671-7220" target="_blank" rel="noopener">0009-0000-3671-7220</a>';
   const CV = (t) => '<a href="assets/cv.pdf" target="_blank" rel="noopener">' + t + '</a>';
 
   window.ASSIST_I18N = {
@@ -50,7 +51,7 @@
         award: "Le master de George est financé par la bourse NORSTIP de la Direction norvégienne de l'enseignement supérieur et des compétences (2025–2027).",
         interests: "Les domaines d'intérêt de George sont l'écologie microbienne, la microbiologie des sols, les milieux extrêmes et les zones arides, la résistance aux antimicrobiens, l'approche « Une seule santé », les maladies de la faune sauvage, la fixation de l'azote, la bioprospection et les politiques des ressources naturelles.",
         where: "George vit à Trondheim, en Norvège, où il étudie à la NTNU, et mène ses travaux de terrain à Dodoma, dans le centre de la Tanzanie. <a href=\"#globe-section\">Faites tourner le globe</a> pour voir tous ses lieux de recherche et de présentation.",
-        contact: "Vous pouvez écrire à George à l'adresse " + MAIL + ", le contacter sur " + LI + " ou utiliser le <a href=\"#contact\">formulaire de contact</a>.",
+        contact: "Vous pouvez écrire à George à l'adresse " + MAIL + ", le contacter sur " + LI + " ou utiliser le <a href=\"#contact\">formulaire de contact</a>. Son identifiant ORCID est " + OR + ".",
         cv: "Vous pouvez " + CV("télécharger le CV de George ici") + " (en anglais).",
         training: "George a suivi deux formations : une formation pratique en génomique et métagénomique des agents pathogènes selon l'approche « Une seule santé », avec le SACIDS, le gouvernement tanzanien et l'Université d'agriculture de Sokoine (2023) — extraction d'ADN, électrophorèse sur gel, Qubit/NanoDrop, séquençage Oxford Nanopore et BLAST —, ainsi que la CIRTification en protection des participants humains de l'Université de l'Illinois à Chicago (2024). <a href=\"#experience\">Voir Expérience et formation</a>.",
         intern: "En 2021, George a effectué un stage en agroforesterie, production et multiplication de semences au Tanzania Agricultural Research Institute (TARI), centre de Tumbi, à Tabora, où il a multiplié des essences indigènes et fruitières comme le Vitex, le marula, l'anacardier, les agrumes et le manguier.",
@@ -73,7 +74,7 @@
         award: "O mestrado do George é financiado pela bolsa NORSTIP da Direção Norueguesa do Ensino Superior e Competências (2025–2027).",
         interests: "Os interesses do George incluem ecologia microbiana, microbiologia do solo, ambientes extremos e zonas áridas, resistência aos antimicrobianos, «Uma Só Saúde», doenças da vida selvagem, fixação de azoto, bioprospeção e políticas de recursos naturais.",
         where: "O George vive em Trondheim, na Noruega, onde estuda na NTNU, e realiza o trabalho de campo em Dodoma, no centro da Tanzânia. <a href=\"#globe-section\">Rode o globo</a> para ver todos os locais de investigação e de apresentação.",
-        contact: "Pode enviar um e-mail ao George para " + MAIL + ", contactá-lo no " + LI + " ou utilizar o <a href=\"#contact\">formulário de contacto</a>.",
+        contact: "Pode enviar um e-mail ao George para " + MAIL + ", contactá-lo no " + LI + " ou utilizar o <a href=\"#contact\">formulário de contacto</a>. O seu ORCID iD é " + OR + ".",
         cv: "Pode " + CV("descarregar o CV do George aqui") + " (em inglês).",
         training: "O George concluiu duas formações: uma formação prática em genómica e metagenómica de agentes patogénicos na perspetiva «Uma Só Saúde», com o SACIDS, o Governo da Tanzânia e a Universidade de Agricultura de Sokoine (2023) — extração de ADN, eletroforese em gel, Qubit/NanoDrop, sequenciação Oxford Nanopore e BLAST —, e a CIRTification em proteção de participantes humanos, da Universidade do Illinois em Chicago (2024). <a href=\"#experience\">Ver Experiência e formação</a>.",
         intern: "Em 2021, o George fez um estágio em agrofloresta e em desenvolvimento e multiplicação de sementes no Tanzania Agricultural Research Institute (TARI), Centro de Tumbi, em Tabora, onde propagou árvores autóctones e de fruto, como Vitex, marula, cajueiro, citrinos e mangueira.",
@@ -96,7 +97,7 @@
         award: "تُموَّل دراسة جورج للماجستير بمنحة NORSTIP المقدَّمة من المديرية النرويجية للتعليم العالي والمهارات (2025–2027).",
         interests: "تشمل اهتمامات جورج علم البيئة الميكروبية، وعلم الأحياء الدقيقة للتربة، والبيئات القاسية والأراضي الجافة، ومقاومة مضادات الميكروبات، ونهج «الصحة الواحدة»، وأمراض الحياة البرية، وتثبيت النيتروجين، والتنقيب الحيوي، وسياسات الموارد الطبيعية.",
         where: "يقيم جورج في تروندهايم بالنرويج، حيث يدرس في جامعة NTNU، ويُجري عمله الميداني في دودوما بوسط تنزانيا. <a href=\"#globe-section\">أدِر الكرة الأرضية</a> لرؤية جميع مواقع أبحاثه والعروض التي شارك فيها.",
-        contact: "يمكنك مراسلة جورج عبر البريد الإلكتروني " + MAIL + "، أو التواصل معه عبر " + LI + "، أو استخدام <a href=\"#contact\">نموذج التواصل</a>.",
+        contact: "يمكنك مراسلة جورج عبر البريد الإلكتروني " + MAIL + "، أو التواصل معه عبر " + LI + "، أو استخدام <a href=\"#contact\">نموذج التواصل</a>. ومعرّفه في ORCID هو " + OR + ".",
         cv: "يمكنك " + CV("تنزيل السيرة الذاتية لجورج من هنا") + " (باللغة الإنجليزية).",
         training: "أتمّ جورج دورتين تدريبيتين: تدريبًا عمليًا على علم جينوم المُمرِضات والميتاجينوم وفق نهج «الصحة الواحدة» مع SACIDS وحكومة تنزانيا وجامعة سوكويني للزراعة (2023)، شمل استخلاص الحمض النووي والترحيل الكهربائي على الهلام وجهازَي Qubit وNanoDrop وتحديد التسلسل بتقنية Oxford Nanopore وأداة BLAST؛ وشهادة CIRTification في حماية المشاركين من البشر من جامعة إلينوي في شيكاغو (2024). <a href=\"#experience\">اطّلع على قسم الخبرات والتدريب</a>.",
         intern: "في عام 2021، أنهى جورج تدريبًا عمليًا في الحراجة الزراعية وتطوير البذور وإكثارها في معهد البحوث الزراعية التنزاني (TARI)، مركز تومبي في تابورا، حيث أكثر أشجارًا محلية وأشجار فاكهة مثل الفيتكس والمارولا والكاجو والحمضيات والمانجو.",
@@ -119,7 +120,7 @@
         award: "George 的硕士学业由挪威高等教育与技能局的 NORSTIP 奖学金资助（2025–2027 年）。",
         interests: "George 的研究兴趣包括微生物生态学、土壤微生物学、极端环境与旱地、抗微生物药物耐药性、“同一健康”、野生动物疾病、生物固氮、生物勘探以及自然资源政策。",
         where: "George 现居挪威特隆赫姆，在 NTNU 学习，并在坦桑尼亚中部的多多马开展野外工作。<a href=\"#globe-section\">旋转地球仪</a>，即可查看他的所有研究地点和学术展示地点。",
-        contact: "您可以发送邮件至 " + MAIL + "，在 " + LI + " 上与 George 联系，或使用<a href=\"#contact\">联系表单</a>。",
+        contact: "您可以发送邮件至 " + MAIL + "，在 " + LI + " 上与 George 联系，或使用<a href=\"#contact\">联系表单</a>。他的 ORCID iD 为 " + OR + "。",
         cv: "您可以" + CV("在此下载 George 的简历") + "（英文版）。",
         training: "George 完成了两项培训：与 SACIDS、坦桑尼亚政府和索科伊内农业大学合作开展的“同一健康”病原体基因组学与宏基因组学实操培训（2023 年），内容涵盖 DNA 提取、凝胶电泳、Qubit/NanoDrop、Oxford Nanopore 测序和 BLAST；以及伊利诺伊大学芝加哥分校的人类研究参与者保护 CIRTification 认证（2024 年）。<a href=\"#experience\">查看经历与培训</a>。",
         intern: "2021 年，George 在塔波拉的坦桑尼亚农业研究所（TARI）Tumbi 中心完成了农林复合经营、种子培育与繁殖方面的实习，繁育了牡荆属（Vitex）植物、马鲁拉树、腰果、柑橘和芒果等本土树种和果树。",
