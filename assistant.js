@@ -63,8 +63,8 @@
       sw: "Shahada ya Uzamili ya George inafadhiliwa na Udhamini wa NORSTIP kutoka Kurugenzi ya Elimu ya Juu na Ujuzi ya Norwei (2025–2027)." },
 
     { id: "interests", kw: ["interest", "interests", "interested", "passion", "policy", "drylands", "extreme", "maslahi", "anapenda", "sera", "anavutiwa"],
-      en: "George's interests include microbial ecology, soil microbiology, extreme environments and drylands, antimicrobial resistance, One Health, wildlife diseases, nitrogen fixation, bioprospecting and natural resources policy.",
-      sw: "Maeneo anayoyapenda George ni ikolojia ya vijidudu, mikrobiolojia ya udongo, mazingira magumu na maeneo kame, usugu wa vimelea dhidi ya dawa, Afya Moja, magonjwa ya wanyamapori, ufungaji wa naitrojeni, utafutaji wa rasilimali za kibiolojia na sera za maliasili." },
+      en: "George's interests include microbial ecology, soil microbiology, extreme environments and drylands, antimicrobial resistance, One Health, wildlife diseases, bioprospecting and natural resources policy.",
+      sw: "Maeneo anayoyapenda George ni ikolojia ya vijidudu, mikrobiolojia ya udongo, mazingira magumu na maeneo kame, usugu wa vimelea dhidi ya dawa, Afya Moja, magonjwa ya wanyamapori, utafutaji wa rasilimali za kibiolojia na sera za maliasili." },
 
     { id: "where", kw: ["where", "based", "live", "lives", "location", "country", "located", "wapi", "anaishi", "nchi", "yuko"],
       en: "George is based in Trondheim, Norway, where he studies at NTNU, and carries out his fieldwork in Dodoma, central Tanzania. <a href=\"#globe-section\">Spin the globe</a> to see all his research and presentation sites.",

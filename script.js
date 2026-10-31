@@ -438,7 +438,7 @@ function openLightbox(i) {
   const img = gItems[lbIndex].querySelector("img");
   lbImg.src = img.dataset.full || img.currentSrc || img.src;
   lbImg.alt = img.alt;
-  lbCap.textContent = gItems[lbIndex].querySelector("figcaption").textContent;
+  lbCap.textContent = gItems[lbIndex].querySelector(".slide-cap, figcaption").textContent;
   if (lb.hidden) { lastFocus = document.activeElement; lb.hidden = false; document.body.style.overflow = "hidden"; }
   document.getElementById("lbClose").focus();
 }
@@ -624,6 +624,7 @@ window.onLangChange(() => {
     index = (i + slides.length) % slides.length;
     track.style.transform = `translateX(-${index * 100}%)`;
     [...dots.children].forEach((d, j) => d.classList.toggle("active", j === index));
+    slides.forEach((sl, j) => sl.classList.toggle("is-active", j === index));
     const next = slides[(index + 1) % slides.length].querySelector("img");
     if (next) next.loading = "eager";           // load the next photo in advance
   }

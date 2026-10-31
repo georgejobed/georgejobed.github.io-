@@ -803,11 +803,19 @@ bdi { white-space: nowrap; }  /* keep Latin names in brackets together inside Ar
    VERSION 8: motion, sliding gallery, justified text
    ========================================================= */
 
-/* Justified paragraphs */
-.lead, .about-text p, .o-text, .connect-text p, .contact-text p, .j-item p,
-.card p:not(.card-tag):not(.card-role):not(.card-org):not(.card-meta) {
-  text-align: justify; -webkit-hyphens: auto; hyphens: auto; text-justify: inter-word;
+/* Paragraph alignment: justified on wide screens (like printed journals),
+   left-aligned on phones where narrow columns would leave large gaps between words */
+@media (min-width: 821px) {
+  .lead, .about-text p, .o-text, .connect-text p, .contact-text p,
+  .card p:not(.card-tag):not(.card-role):not(.card-org):not(.card-meta) {
+    text-align: justify; text-justify: inter-word; -webkit-hyphens: auto; hyphens: auto; hyphenate-limit-chars: 7 3 3;
+  }
 }
+@media (max-width: 820px) {
+  .lead, .about-text p, .o-text, .connect-text p, .contact-text p, .j-item p,
+  .card p:not(.card-tag):not(.card-role):not(.card-org):not(.card-meta) { text-align: start; hyphens: manual; }
+}
+.j-item p { text-align: start; }
 
 /* Cards slide in from the left and right */
 .cards > .reveal:nth-child(odd):not(.visible),
@@ -900,3 +908,43 @@ bdi { white-space: nowrap; }  /* keep Latin names in brackets together inside Ar
 /* Slightly tighter spacing between sections */
 .section { padding: 92px 0; }
 @media (max-width: 820px) { .section { padding: 68px 0; } }
+
+/* ---------- Gallery slides: no dark side areas ---------- */
+.slide-bg { display: none; }
+.carousel { background: var(--surface); }
+.g-item.slide { height: clamp(380px, 46vw, 600px); background: var(--surface); }
+.g-item.slide button { display: block; }
+.g-item.slide img {
+  width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; box-shadow: none;
+  transition: transform 6s ease;
+}
+.g-item.slide:hover img { transform: none; }
+.g-item.slide.is-active img { transform: scale(1.05); }          /* slow, gentle zoom on the photo shown */
+.g-item.slide figcaption { text-align: start; padding: 4rem 2rem 3rem; display: flex; flex-direction: column; gap: .35rem; }
+.slide-no { font-size: .78rem; font-weight: 600; letter-spacing: .14em; opacity: .8; }
+.slide-cap { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.05rem, 1.8vw, 1.45rem); font-weight: 600; line-height: 1.3; max-width: 40rem; }
+:lang(ar) .slide-cap { font-family: "Noto Sans Arabic", sans-serif; } :lang(zh-CN) .slide-cap { font-family: "Noto Sans SC", sans-serif; }
+
+/* Tall (portrait) photos: photo on one side, caption panel on the other */
+@media (min-width: 821px) {
+  .g-item.slide.portrait { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
+  .g-item.slide.portrait button { grid-column: 1; height: 100%; }
+  .g-item.slide.portrait figcaption {
+    position: static; grid-column: 2; justify-content: center; padding: 3rem 3.5rem;
+    background: linear-gradient(140deg, #0f6b5c, #0b4f45 60%, #6e4319); color: #fff;
+  }
+  .g-item.slide.portrait figcaption::before {
+    content: ""; width: 56px; height: 4px; border-radius: 4px; margin-bottom: 1rem; background: #f2b45a;
+  }
+  .g-item.slide.portrait .slide-cap { font-size: clamp(1.4rem, 2.4vw, 2rem); }
+}
+@media (max-width: 820px) {
+  .g-item.slide { height: 380px; }
+  .g-item.slide figcaption { padding: 3rem 1.2rem 2.4rem; }
+}
+@media (min-width: 821px) {
+  .g-item.slide.portrait { grid-template-rows: minmax(0, 1fr); }
+  .g-item.slide.portrait button, .g-item.slide.portrait figcaption { min-height: 0; height: 100%; overflow: hidden; }
+}
+@media (min-width: 821px) { .g-item.slide.portrait figcaption { padding-inline: 3rem 5.5rem; } }
+[dir="rtl"] .slide-no { align-self: flex-end; }
