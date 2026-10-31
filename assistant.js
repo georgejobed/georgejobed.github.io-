@@ -3,7 +3,8 @@
 // Runs entirely in the visitor's browser: no server, no API key,
 // no cost, and no visitor data is sent anywhere.
 // It matches questions to the topics below. To teach it something
-// new, add a topic: keywords (English + Kiswahili) and two answers.
+// new, add a topic: keywords and answers (English + Kiswahili here;
+// French, Portuguese, Arabic and Chinese are in assistant-i18n.js).
 // =========================================================
 (function () {
   const lang = () => (window.siteLang ? window.siteLang() : "en");
@@ -14,8 +15,8 @@
       sw: "Habari! 👋 Ninaweza kukueleza kuhusu utafiti wa George, machapisho, ufundishaji na ugani, elimu yake, au jinsi ya kuwasiliana naye. Ungependa kujua nini?" },
 
     { id: "who", kw: ["who", "about george", "introduce", "background", "biography", "ni nani", "nani", "wasifu wake", "mweleze", "historia"],
-      en: "George Jameson Obed is a biologist, microbial ecologist and natural resources manager. He is an MSc student in Natural Resources Management – Biology at NTNU (Norway), supported by a NORSTIP scholarship, with a BSc in Biology from the University of Dodoma (Tanzania). Most of his research has been carried out in the semi-arid landscapes of central Tanzania.",
-      sw: "George Jameson Obed ni mwanabiolojia, mtaalamu wa ikolojia ya vijidudu na msimamizi wa maliasili. Ni mwanafunzi wa Shahada ya Uzamili katika Usimamizi wa Maliasili – Biolojia NTNU (Norwei) kwa udhamini wa NORSTIP, na ana Shahada ya Kwanza ya Biolojia kutoka Chuo Kikuu cha Dodoma (Tanzania). Sehemu kubwa ya utafiti wake imefanyika katika maeneo kame ya kati ya Tanzania." },
+      en: "George Jameson Obed is a microbial ecologist and natural resources biologist. He is an MSc student in Natural Resources Management – Biology at NTNU (Norway), supported by a NORSTIP scholarship, with a BSc in Biology from the University of Dodoma (Tanzania). Most of his research has been carried out in the semi-arid landscapes of central Tanzania.",
+      sw: "George Jameson Obed ni mtaalamu wa ikolojia ya vijidudu na mwanabiolojia wa maliasili. Ni mwanafunzi wa Shahada ya Uzamili katika Usimamizi wa Maliasili – Biolojia NTNU (Norwei) kwa udhamini wa NORSTIP, na ana Shahada ya Kwanza ya Biolojia kutoka Chuo Kikuu cha Dodoma (Tanzania). Sehemu kubwa ya utafiti wake imefanyika katika maeneo kame ya kati ya Tanzania." },
 
     { id: "research", kw: ["research", "work on", "working on", "projects", "project", "study", "studies", "focus", "utafiti", "anafanya kazi", "mradi", "miradi", "chunguza", "tafiti"],
       en: "George works on four main projects: (1) zoonotic and antimicrobial-resistant bacteria in invasive house crows in Dodoma (MSc); (2) soil health and nitrogen-fixing root-nodule microbes in semi-arid Nghumbi (MKARUN); (3) antimicrobial activity of <i>Moringa oleifera</i> extracts (bioprospecting); and (4) bacterial markers in wild scuttle flies. <a href=\"#research\">See the Research section</a>.",
@@ -75,7 +76,7 @@
 
     { id: "cv", kw: ["cv", "resume", "curriculum", "download"],
       en: "You can <a href=\"assets/cv.pdf\" target=\"_blank\" rel=\"noopener\">download George's CV here</a>.",
-      sw: "Unaweza <a href=\"assets/cv.pdf\" target=\"_blank\" rel=\"noopener\">kupakua CV ya George hapa</a>." },
+      sw: "Unaweza <a href=\"assets/cv.pdf\" target=\"_blank\" rel=\"noopener\">kupakua CV ya George hapa</a> (kwa Kiingereza)." },
 
     { id: "training", kw: ["training", "trainings", "course", "courses", "workshop", "sacids", "genomics", "metagenomics", "nanopore", "sequencing", "blast", "cirtification", "ethics", "mafunzo", "kozi", "warsha", "maadili"],
       en: "George has completed two trainings: One Health Pathogen Genomics and Metagenomics hands-on training with SACIDS, the Government of Tanzania and Sokoine University of Agriculture (2023) — covering DNA extraction, gel electrophoresis, Qubit/NanoDrop, Oxford Nanopore sequencing and BLAST — and CIRTification in human research protections from the University of Illinois Chicago (2024). <a href=\"#experience\">See Experience &amp; training</a>.",
@@ -100,7 +101,17 @@
   };
   const PLACEHOLDER = { en: "Type a question…", sw: "Andika swali…" };
 
-  const norm = s => " " + s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9\s-]/g, " ").replace(/\s+/g, " ") + " ";
+  const X = window.ASSIST_I18N || { kw: {}, answers: {}, fallback: {}, suggest: {}, placeholder: {} };
+  // add the extra-language keywords to each topic
+  TOPICS.forEach(t => { t.kw = t.kw.concat(X.kw[t.id] || []); });
+  const answerFor = t => t[lang()] || (X.answers[lang()] || {})[t.id] || t.en;
+
+  // Normalise text: lower case, remove accents and Arabic vowel marks, unify Arabic letter forms
+  const norm = s => " " + s.toLowerCase().normalize("NFD")
+    .replace(/[\u0300-\u036f\u064B-\u0652\u0670]/g, "")
+    .replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه")
+    .replace(/[^\p{L}\p{N}\s-]/gu, " ").replace(/\s+/g, " ") + " ";
+  const noSpaces = /[\u0600-\u06FF\u4E00-\u9FFF]/;   // Arabic & Chinese: match inside words too
 
   function findAnswer(text) {
     const q = norm(text);
@@ -109,13 +120,15 @@
       let score = 0;
       t.kw.forEach(k => {
         const key = norm(k).trim();
+        if (!key) return;
         if (q.includes(" " + key + " ")) score += 2 + key.split(" ").length;      // whole word / phrase
+        else if (noSpaces.test(key) && q.includes(key)) score += 2 + (key.length > 2 ? 1 : 0); // Arabic / Chinese
         else if (key.length > 4 && q.includes(key)) score += 1;                     // part of a word
       });
       if (t.id === "greet" || t.id === "thanks") score *= 0.6;                     // prefer real topics
       if (score > bestScore) { bestScore = score; best = t; }
     });
-    return best ? best[lang()] : FALLBACK[lang()];
+    return best ? answerFor(best) : (FALLBACK[lang()] || X.fallback[lang()] || FALLBACK.en);
   }
 
   // ---- interface ----
@@ -142,17 +155,18 @@
   }
   function renderSuggest() {
     suggest.innerHTML = "";
-    SUGGEST[lang()].forEach(([label, id]) => {
+    (SUGGEST[lang()] || X.suggest[lang()] || SUGGEST.en).forEach(([label, id]) => {
       const b = document.createElement("button");
       b.type = "button"; b.textContent = label;
-      b.addEventListener("click", () => { add(label, "user"); reply(TOPICS.find(t => t.id === id)[lang()]); });
+      b.addEventListener("click", () => { add(label, "user"); reply(answerFor(TOPICS.find(t => t.id === id))); });
       suggest.appendChild(b);
     });
-    input.placeholder = PLACEHOLDER[lang()];
+    input.placeholder = PLACEHOLDER[lang()] || X.placeholder[lang()] || PLACEHOLDER.en;
+    panel.dir = lang() === "ar" ? "rtl" : "ltr";
   }
   function open() {
     panel.hidden = false; fab.setAttribute("aria-expanded", "true");
-    if (!greeted) { greeted = true; reply(TOPICS[0][lang()]); }
+    if (!greeted) { greeted = true; reply(answerFor(TOPICS[0])); }
     renderSuggest(); input.focus();
   }
   function close() { panel.hidden = true; fab.setAttribute("aria-expanded", "false"); fab.focus(); }

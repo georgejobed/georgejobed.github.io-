@@ -10,176 +10,24 @@ const store = {
 };
 
 // ---------------------------------------------------------
-// 1. SWAHILI TRANSLATIONS
-//    English text lives in index.html. Kiswahili lives here.
-//    To fix or improve a translation, just edit the text.
+// 1. LANGUAGES
+//    English text lives in index.html. All other languages live in
+//    translations.js. The menu below switches between them.
 // ---------------------------------------------------------
-const SW = {
-  "skip": "Ruka hadi maudhui makuu",
-  "nav.about": "Kuhusu", "nav.research": "Utafiti", "nav.outreach": "Ugani", "nav.pubs": "Machapisho",
-  "nav.gallery": "Picha", "nav.news": "Habari", "nav.contact": "Mawasiliano",
+const LANGS = [
+  { code: "en", label: "English",   short: "EN", flag: "gb", html: "en" },
+  { code: "sw", label: "Kiswahili", short: "SW", flag: "tz", html: "sw" },
+  { code: "ar", label: "العربية",    short: "AR", flag: "sa", html: "ar", rtl: true },
+  { code: "fr", label: "Français",  short: "FR", flag: "fr", html: "fr" },
+  { code: "zh", label: "中文",       short: "中文", flag: "cn", html: "zh-CN" },
+  { code: "pt", label: "Português", short: "PT", flag: "pt", html: "pt-PT" }
+];
+const I18N = window.I18N || {};
+const MSGS = window.I18N_MSG || {};
+const MSG = new Proxy({}, { get: (_, l) => MSGS[l] || MSGS.en });
 
-  "hero.eyebrow": "Mwanabiolojia · Mtaalamu wa Ikolojia ya Vijidudu · Msimamizi wa Maliasili",
-  "hero.role": "Mtaalamu wa Ikolojia ya Vijidudu na Mwanabiolojia wa Maliasili",
-  "hero.lead": "Ninachunguza jinsi viumbe vidogo vinavyoathiri udongo, wanyamapori na afya ya binadamu — kuanzia bakteria wanaofunga naitrojeni katika maeneo kame ya Tanzania hadi bakteria sugu kwa dawa wanaobebwa na ndege vamizi — na jinsi maarifa haya yanavyoweza kuongoza usimamizi endelevu wa maliasili.",
-  "hero.btn1": "Gundua utafiti wangu", "hero.cv": "Pakua CV",
-  "badge1": "Ikolojia ya vijidudu", "badge2": "Maliasili", "badge3": "Tanzania · Norwei",
-
-  "about.label": "01 — Kuhusu", "about.title": "Shauku ya maisha katika mazingira magumu",
-  "about.p1": "Mimi ni <strong>mwanabiolojia</strong> na mwanafunzi wa Shahada ya Uzamili katika <strong>Usimamizi wa Maliasili – Biolojia</strong> katika Chuo Kikuu cha Sayansi na Teknolojia cha Norwei (NTNU), nikifadhiliwa na udhamini wa NORSTIP. Uzoefu wangu unajumuisha mikrobiolojia, ikolojia ya vijidudu, biolojia ya molekuli na utafiti wa mazingira — sehemu kubwa ukiwa umefanyika katika maeneo kame ya kati ya Tanzania.",
-  "about.p2": "Ninavutiwa hasa na jinsi <strong>bioanuai na kazi za vijidudu</strong> zinavyohusiana na hali ya mazingira, sifa za udongo na michakato ya mifumo ikolojia, hasa katika <strong>maeneo kame na mazingira mengine magumu</strong>. Mbali na utafiti, ninashirikiana kwa karibu na jamii — kuwafundisha wakulima wadogo kuhusu afya ya udongo na kufundisha mikrobiolojia kwa wanafunzi wa shahada ya kwanza.",
-  "stat1": "miaka katika utafiti", "stat2": "miradi ya utafiti", "stat3": "michango ya mikutano niliyoandika pamoja",
-
-  "res.label": "02 — Utafiti", "res.title": "Ninachofanyia kazi",
-  "res.c1.tag": "Utafiti wa Uzamili · NTNU",
-  "res.c1.title": "Bakteria wa zoonotiki na sugu kwa dawa kwa kunguru vamizi",
-  "res.c1.text": "Kuchunguza mambo ya kiikolojia na ya kibinadamu yanayohusiana na bakteria wa zoonotiki na walio sugu kwa dawa kwa Kunguru wa Kihindi vamizi (<i>Corvus splendens</i>) katika Jiji la Dodoma, Tanzania — swali la Afya Moja (One Health) linalogusa wanyamapori, binadamu na mazingira.",
-  "res.sup": "Wasimamizi:",
-  "res.c2.title": "Afya ya udongo na vijidudu vinavyofunga naitrojeni katika maeneo kame ya Tanzania",
-  "res.c2.text": "Kuchunguza vijidudu vya vinundu vya mizizi ya mikunde inayostahimili ukame katika mashamba ya wakulima wadogo Nghumbi kwa kutumia mfuatano wa jeni za 16S na nifH, na kujenga mkusanyiko wa bakteria wanaofunga naitrojeni na vijidudu vingine vya ndani ya mimea.",
-  "res.c2.meta": "Msaidizi wa Utafiti na Mwanachama wa Timu ya Mradi · 2023 – sasa",
-  "res.c3.tag": "Utafutaji wa rasilimali za kibiolojia · UDOM",
-  "res.c3.title": "Uwezo wa <i>Moringa oleifera</i> (mlonge) kuua vimelea",
-  "res.c3.text": "Kupima dondoo ghafi za mbegu na majani ya <i>Moringa oleifera</i> dhidi ya <i>Escherichia coli</i>, <i>Salmonella</i> Typhi na <i>Candida albicans</i> — kuchunguza mimea kama chanzo cha dawa mpya za kuua vimelea.",
-  "res.c3.meta": "Mradi wa utafiti wa Shahada ya Kwanza · 2022",
-  "res.c4.tag": "Uchambuzi wa data · NTNU",
-  "res.c4.title": "Viashiria vya vijidudu kwa nzi wa porini (scuttle flies)",
-  "res.c4.text": "Kutumia uchambuzi wa kibaguzi (discriminant analysis) katika R kupima kama bakteria wa ndani (endosymbionts) na bakteria wengine wanaweza kuwa viashiria vya jinsia, spishi, eneo na msimu kwa nzi wa porini (Diptera: Phoridae).",
-  "res.c4.meta": "Makala inaandaliwa",
-  "res.interests": "Maeneo ya utafiti",
-  "chip1": "Ikolojia ya vijidudu", "chip2": "Mikrobiolojia ya udongo", "chip3": "Mazingira magumu na maeneo kame",
-  "chip4": "Usugu wa vimelea dhidi ya dawa", "chip5": "Magonjwa ya wanyamapori", "chip6": "Ufungaji wa naitrojeni",
-  "chip7": "Utafutaji wa rasilimali za kibiolojia (bioprospecting)", "chip8": "Sera za maliasili",
-
-  "exp.label": "03 — Uzoefu", "exp.title": "Uzoefu na mafunzo",
-  "exp.d1": "Jul 2026 – sasa", "exp.t1": "Mtafiti wa Uzamili",
-  "exp.p1": "Nilikamata Kunguru wa Kihindi 53 kwa kutumia mitego ya ngazi yenye chambo na kukusanya maudhui ya utumbo wao kwa ajili ya kutenga bakteria. Kisha nilitenga na kutambua bakteria wa utumbo kwa uoteshaji na vipimo vya kibiokemia, na kupima usugu wao dhidi ya dawa kwa njia ya Kirby–Bauer. Sambamba na kazi za maabara, nilikusanya data za mazingira na za shughuli za binadamu, ambazo sasa ninazichambua ili kuelewa jinsi maeneo ya sampuli na shughuli za binadamu zinavyohusiana na ubebaji wa bakteria na mifumo ya usugu.",
-  "exp.d2": "Jul 2023 – sasa", "exp.t2": "Msaidizi wa Utafiti na Mwanachama wa Timu ya Mradi — MKARUN",
-  "exp.p2": "Nilikusanya sampuli za vinundu vya mizizi kutoka mikunde inayostahimili ukame katika mashamba ya wakulima wadogo kwa misimu miwili, nikachimba DNA kwa ajili ya mfuatano wa 16S na nifH, na kujenga mkusanyiko wa bakteria wanaofunga naitrojeni na vijidudu vingine vya ndani ya mimea kwa kutumia virutubisho teule na visivyo teule. Pia ninatoa ushauri wa usanifu na mbinu za utafiti kuhusu kilimo mseto cha Gliricidia na tafiti za mazao funika na vijidudu.",
-  "exp.t3": "Mradi wa Utafiti wa Shahada ya Kwanza",
-  "exp.p3": "Niliandaa dondoo ghafi za majani na mbegu za <i>Moringa oleifera</i> (mlonge) kwa njia ya kuloweka, na kupima uwezo wa viwango tofauti kuua <i>Escherichia coli</i>, <i>Salmonella</i> Typhi na <i>Candida albicans</i> kwa njia ya agar well diffusion. Kisha nilichambua matokeo na kuandika ripoti ya utafiti kama sehemu ya Shahada yangu ya Kwanza ya Biolojia.",
-  "exp.sup3": "Msimamizi:",
-  "exp.t4": "Kilimo Mseto, Uendelezaji na Uzalishaji wa Mbegu",
-  "exp.p4": "Nilikuza na kutunza miti ya asili na ya matunda kupitia uendelezaji na uzalishaji wa mbegu kwa vitendo, ikiwemo <i>Vitex mombasae</i>, <i>Vitex doniana</i>, <i>Strychnos cocculoides</i>, mng'ongo (<i>Sclerocarya birrea</i>), mikorosho (<i>Anacardium occidentale</i>), michungwa na miembe.",
-  "train.head": "Mafunzo niliyohudhuria",
-  "exp.t5": "CIRTification: Mafunzo ya Ushirikishaji wa Jamii katika Utafiti — Ulinzi wa Washiriki wa Utafiti",
-  "exp.p5": "Mafunzo yalihusu maadili ya utafiti, vigezo na upatikanaji wa washiriki, ridhaa ya washiriki, Bodi za Maadili (IRB), ukusanyaji na ulinzi wa data, na utafiti wa shambani wenye maadili.",
-
-  "out.label": "04 — Ufundishaji, ugani na ushirikishaji jamii",
-  "out.title": "Kushirikisha sayansi na wakulima na wanafunzi",
-  "out.d1": "Jul 2023 – sasa", "out.t1": "Mafunzo kwa wakulima na utafiti shirikishi",
-  "out.p1": "Ninawafundisha wakulima wadogo dhana za afya ya udongo katika mazingira kame na kuwezesha maamuzi ya pamoja kwa jaribio la mazao funika linalohusisha mashamba mengi. Pamoja na timu ya mradi, nilishiriki kuandaa zana za wakulima za udhibiti husishi wa visumbufu — utambuzi wa wadudu wa eneo hilo na njia rahisi za kuchukua sampuli — na kuzitafsiri kutoka Kiingereza kwenda Kiswahili.",
-  "out.t2": "Mwanasayansi wa Maabara wa Kujitolea — Biolojia",
-  "out.p2": "Niliwafundisha wanafunzi wa shahada ya kwanza nadharia ya mikrobiolojia na parasitolojia kabla ya vipindi vya maabara na kuwasimamia wakati wa mazoezi. Pia nilisaidia kusimamia na kutunza mradi wa ufugaji nyuki wa Idara ya Biolojia.",
-
-  "pub.label": "05 — Machapisho, ripoti na mawasilisho", "pub.title": "Uandishi na mawasilisho",
-  "pub.f.all": "Zote", "pub.f.report": "Ripoti", "pub.f.talk": "Michango ya mikutano", "pub.f.prep": "Makala zinazoandaliwa",
-  "pub.s.talk": "Mchango wa mkutano niliouandika pamoja · wasilisho na bango", "pub.s.flash": "Mchango wa mkutano niliouandika pamoja · wasilisho fupi na bango",
-  "pub.by1": "Iliwasilishwa na K. C. Mercurio; nilichangia kama mwandishi mwenza katika utafiti na uandaaji wa mawasilisho.",
-  "pub.by2": "Iliwasilishwa na K. C. Mercurio; nilichangia kama mwandishi mwenza katika utafiti na uandaaji wa mawasilisho.", "pub.s.report": "Ripoti ya utafiti",
-  "pub.s.prep": "Makala inaandaliwa", "pub.s.prep2": "Makala inaandaliwa",
-  "pub.inprep": "Inaandaliwa", "pub.inprep2": "Inaandaliwa",
-  "pub.cite": "Nakili rejea",
-
-  "map.label": "07 — Kazi yangu inapofanyika", "map.title": "Kutoka maeneo kame ya Tanzania hadi duniani",
-  "map.intro": "Buruta dunia kuizungusha, au chagua eneo kwenye orodha.",
-  "map.k1": "Utafiti na masomo", "map.k2": "Michango ya mikutano niliyoandika pamoja",
-
-  "edu.label": "08 — Elimu", "edu.title": "Safari ya kitaaluma",
-  "edu.thesis": "Tasnifu:", "edu.project": "Mradi wa utafiti:",
-  "aw.head": "Udhamini na tuzo", "aw1.t": "Udhamini wa NORSTIP",
-  "aw1.p": "Kurugenzi ya Elimu ya Juu na Ujuzi ya Norwei · 2025 – 2027",
-  "af.head": "Uanachama wa kitaaluma", "af1.p": "Mwanachama · tangu Nov 2025", "af2.p": "Mwanachama · tangu Jan 2026",
-
-  "gal.label": "09 — Picha", "gal.title": "Shambani na maabara", "gal.intro": "Bofya picha yoyote kuiona kwa skrini nzima.",
-  "gal.c1": "Mandhari kame yanayotazama Jiji la Dodoma", "gal.c2": "Kunguru wa Kihindi wakitafuta chakula kwenye dampo, Jiji la Dodoma", "gal.c3": "Kuandaa sahani za virutubisho vya kuoteshea bakteria maabara",
-  "gal.c4": "Jiji la Dodoma wakati wa kiangazi", "gal.c5": "Makundi ya bakteria kwenye sahani ya kuoteshea", "gal.c6": "Jengo kuu la NTNU, Gløshaugen, Trondheim",
-
-  "news.label": "10 — Habari", "news.title": "Habari mpya",
-  "n1.t": "Kazi ya shambani ya Uzamili, Dodoma", "n1.p": "Nilikamata Kunguru wa Kihindi 53 na kukamilisha uoteshaji wa bakteria na upimaji wa usugu dhidi ya dawa kutoka kwenye maudhui ya utumbo wao.",
-  "n2.t": "Utafiti wa MKARUN wawasilishwa Kanada", "n2.p": "Kazi ya timu yetu kuhusu mazao funika ya kunde na vijidudu vya vinundu vya mizizi, ambayo niliiandika pamoja na wenzangu, iliwasilishwa na K. C. Mercurio katika Mkutano wa 27 wa Amerika Kaskazini kuhusu Ufungaji wa Naitrojeni.",
-  "n3.t": "Utafiti wa MKARUN wawasilishwa Penn State", "n3.p": "Wasilisho fupi na bango kuhusu kilimo endelevu kinachoongozwa na jamii, nililoandika pamoja na wenzangu, viliwasilishwa na K. C. Mercurio katika Mkutano wa Maji wa Penn State, Marekani.",
-  "n4.t": "Ripoti imechapishwa", "n4.p": "Nilishiriki kuandika ripoti ya utafiti kuhusu utekelezaji wa OECMs (hatua nyingine madhubuti za uhifadhi wa maeneo) katika Manispaa ya Trondheim.",
-  "n5.t": "Nimeanza Uzamili NTNU", "n5.p": "Nilianza Shahada ya Uzamili katika Usimamizi wa Maliasili – Biolojia, Trondheim, kwa udhamini wa NORSTIP.",
-
-  "ct.label": "11 — Mawasiliano", "ct.title": "Tuwasiliane",
-  "ct.p": "Ninafurahi kila wakati kuzungumza kuhusu ikolojia ya vijidudu, Afya Moja (One Health), usimamizi wa maliasili na utafiti shirikishi na jamii.",
-  "f.name": "Jina lako", "f.email": "Barua pepe yako", "f.msg": "Ujumbe", "f.send": "Tuma ujumbe",
-  "totop": "Rudi juu ↑",
-  "nav.journey": "Safari",
-  "hero.status": "Kwa sasa ninachambua data za kazi yangu ya shambani kuhusu kunguru, Dodoma",
-  "gl1": "kunguru waliochukuliwa sampuli za bakteria",
-  "gl2": "miradi ya utafiti",
-  "gl3": "michango ya mikutano niliyoandika pamoja",
-  "gl4": "ripoti ya utafiti iliyochapishwa",
-  "gl5": "makala zinazoandaliwa",
-  "gl6": "nchi ambazo kazi yangu imefika",
-  "cn.title": "Jinsi utafiti wangu unavyoungana",
-  "cn.p": "Miradi yangu iko mahali ambapo udongo na mimea, wanyamapori na binadamu hukutana. Ikolojia ya vijidudu ndiyo uzi unaoiunganisha — kuanzia bakteria wanaofunga naitrojeni wanaosaidia mazao ya wakulima hadi bakteria sugu wanaosafiri kati ya ndege, binadamu na mazingira.",
-  "cn.a": "Udongo na mimea",
-  "cn.b": "Wanyamapori",
-  "cn.c": "Binadamu na sera",
-  "cn.core1": "Ikolojia ya", "cn.core2": "vijidudu",
-  "cn.t1": "vijidudu vya udongo",
-  "cn.t2": "Nzi wa porini",
-  "cn.t2s": "viashiria vya bakteria",
-  "cn.t3": "Mlonge",
-  "cn.t3s": "dawa kutoka mimea",
-  "cn.t4": "Kunguru",
-  "cn.t4s": "Afya Moja",
-  "cn.t5": "Ripoti ya OECM",
-  "cn.t5s": "sera za uhifadhi",
-  "exp.sub1": "Uzoefu wa utafiti",
-  "exp.r1": "Utafiti wa Uzamili",
-  "exp.o1": "Chuo Kikuu cha Sayansi na Teknolojia cha Norwei (NTNU) · Kazi ya shambani Dodoma, Tanzania",
-  "exp.h2": "Mradi wa Kuboresha Afya na Rutuba ya Udongo Nghumbi (MKARUN)",
-  "exp.r2": "Msaidizi wa Utafiti na Mwanachama wa Timu ya Mradi",
-  "exp.pi": "Mtafiti Mkuu:",
-  "exp.r3": "Mradi wa utafiti wa Shahada ya Kwanza",
-  "exp.t6": "Jenomiki ya Vimelea na Metagenomiki kwa Mtazamo wa Afya Moja — Mafunzo kwa Vitendo",
-  "exp.p6": "Nilipata mafunzo kwa vitendo kuhusu uchimbaji wa DNA, agarose gel electrophoresis, na upimaji wa ubora na kiwango cha DNA kwa kutumia Qubit na NanoDrop. Pia nilipata uzoefu wa vitendo wa mfuatano wa vinasaba kwa teknolojia ya Oxford Nanopore na uchakataji wa data za mfuatano, na kufanya uchambuzi wa ulinganifu na utambuzi wa mfuatano kwa kutumia BLAST.",
-  "int.head": "Uzoefu wa mafunzo kwa vitendo",
-  "exp.r4": "Mwanafunzi wa mafunzo kwa vitendo",
-  "jr.label": "06 — Safari",
-  "jr.title": "Safari yangu hadi sasa",
-  "jr.intro": "Telezesha au tumia mishale kufuatilia hatua muhimu.",
-  "j1": "Nilianza Shahada ya Biolojia",
-  "j1p": "Nilianza masomo ya shahada ya kwanza katika Chuo Kikuu cha Dodoma, Tanzania.",
-  "j2": "Mafunzo kwa vitendo TARI Tumbi",
-  "j2p": "Nilipata uzoefu wa vitendo katika kilimo mseto, uendelezaji na uzalishaji wa mbegu.",
-  "j3": "Utafiti wa shahada na kuhitimu",
-  "j3p": "Nilipima dondoo za mlonge dhidi ya vimelea na kuhitimu Shahada ya Kwanza mwezi Desemba.",
-  "j4": "Mwanasayansi wa maabara wa kujitolea",
-  "j4p": "Nilianza kufundisha na kusimamia mazoezi ya mikrobiolojia na parasitolojia UDOM.",
-  "j5": "Nilijiunga na MKARUN · mafunzo ya SACIDS",
-  "j5p": "Nilianza utafiti wa vijidudu vya udongo pamoja na wakulima wa Nghumbi na kupata mafunzo ya jenomiki ya vimelea.",
-  "j6": "Mafunzo ya maadili ya utafiti",
-  "j6p": "Nilikamilisha CIRTification kuhusu ulinzi wa washiriki wa utafiti.",
-  "j7": "Uzamili NTNU · ripoti ya kwanza",
-  "j7p": "Nilihamia Trondheim kwa udhamini wa NORSTIP na kushiriki kuandika ripoti kuhusu OECMs.",
-  "j8": "Mikutano na kazi ya shambani",
-  "j8p": "Nilishiriki kuandika michango miwili ya mikutano na kufanya kazi ya shambani ya Uzamili Dodoma.",
-  "j9": "Kuhitimu Uzamili (inatarajiwa)",
-  "j9p": "Ninakamilisha tasnifu yangu kuhusu bakteria wa zoonotiki na walio sugu kwa dawa kwa kunguru.",
-  "ct.copy": "Nakili barua pepe",
-  "ft.role": "Mtaalamu wa Ikolojia ya Vijidudu na Mwanabiolojia wa Maliasili",
-  "ft.updated": "Imesasishwa: Oktoba 2026",
-  "chat.fab": "Niulize", "chat.title": "Uliza kuhusu George", "chat.sub": "Msaidizi · majibu kutoka wasifu wa George"
-};
-
-// Short messages created by the code (not in the HTML)
-const MSG = {
-  en: { copied: "Citation copied", copyFail: "Could not copy — please select the text manually", emailCopied: "Email address copied",
-        sending: "Sending…", sent: "Thank you! Your message has been sent.",
-        failed: "Sorry, something went wrong. Please try again later.",
-        notReady: "The form is not connected yet — please email georgeob@ntnu.stud.no for now." },
-  sw: { copied: "Rejea imenakiliwa", copyFail: "Imeshindikana kunakili — tafadhali chagua maandishi mwenyewe", emailCopied: "Barua pepe imenakiliwa",
-        sending: "Inatuma…", sent: "Asante! Ujumbe wako umetumwa.",
-        failed: "Samahani, kuna tatizo. Tafadhali jaribu tena baadaye.",
-        notReady: "Fomu bado haijaunganishwa — tafadhali tuma barua pepe kwa georgeob@ntnu.stud.no kwa sasa." }
-};
-
-let lang = store.get("lang") === "sw" ? "sw" : "en";
+const savedLang = store.get("lang");
+let lang = LANGS.some(l => l.code === savedLang) ? savedLang : "en";
 window.siteLang = () => lang;
 const i18nEls = document.querySelectorAll("[data-i18n]");
 const english = new Map();
@@ -187,22 +35,79 @@ i18nEls.forEach(el => english.set(el, el.innerHTML));
 const langListeners = [];
 window.onLangChange = fn => langListeners.push(fn);
 
-const langBtn = document.getElementById("langToggle");
-function applyLang() {
-  i18nEls.forEach(el => {
-    const key = el.dataset.i18n;
-    el.innerHTML = (lang === "sw" && SW[key]) ? SW[key] : english.get(el);
-  });
-  root.lang = lang;
-  langBtn.textContent = lang === "sw" ? "EN" : "SW";
-  langBtn.setAttribute("aria-label", lang === "sw" ? "Switch to English" : "Badilisha lugha kuwa Kiswahili");
-  langListeners.forEach(fn => fn(lang));
+// ---- Month names in dates such as "Jan – May 2022" ----
+const MONTHS_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS = {
+  sw: ["Jan","Feb","Mac","Apr","Mei","Jun","Jul","Ago","Sep","Okt","Nov","Des"],
+  fr: ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."],
+  pt: ["jan.","fev.","mar.","abr.","maio","jun.","jul.","ago.","set.","out.","nov.","dez."],
+  ar: ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"]
+};
+const M = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)";
+function localizeDate(text, l) {
+  if (l === "en") return text;
+  const idx = m => MONTHS_EN.indexOf(m);
+  if (l === "zh") {
+    let t = text.replace(new RegExp("^" + M + " – " + M + " (\\d{4})$"), (_, a, b, y) => `${y}年${idx(a) + 1}月–${idx(b) + 1}月`);
+    return t.replace(new RegExp(M + " (\\d{4})", "g"), (_, a, y) => `${y}年${idx(a) + 1}月`);
+  }
+  return text.replace(new RegExp("\\b" + M + "\\b", "g"), m => MONTHS[l][idx(m)]);
 }
-langBtn.addEventListener("click", () => {
-  lang = lang === "sw" ? "en" : "sw";
+const dateEls = [...document.querySelectorAll(".card-tag, .t-date, .j-year, .news-item time")]
+  .filter(el => !el.hasAttribute("data-i18n") && new RegExp(M).test(el.textContent));
+dateEls.forEach(el => { el.dataset.en = el.textContent; });
+
+// ---- Language menu ----
+const langBtn = document.getElementById("langBtn");
+const langList = document.getElementById("langList");
+const langFlag = document.getElementById("langFlag");
+const langCode = document.getElementById("langCode");
+LANGS.forEach(l => {
+  const li = document.createElement("li");
+  li.innerHTML = `<button type="button" role="menuitemradio" lang="${l.html}" data-lang="${l.code}"><img src="assets/flags/${l.flag}.svg" alt="" width="24" height="18"><span>${l.label}</span></button>`;
+  langList.appendChild(li);
+});
+function closeLangMenu() { langList.hidden = true; langBtn.setAttribute("aria-expanded", "false"); }
+langBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  const open = langList.hidden;
+  langList.hidden = !open;
+  langBtn.setAttribute("aria-expanded", String(open));
+  if (open) langList.querySelector(`[data-lang="${lang}"]`).focus();
+});
+langList.addEventListener("click", e => {
+  const b = e.target.closest("button[data-lang]");
+  if (!b) return;
+  lang = b.dataset.lang;
   store.set("lang", lang);
   applyLang();
+  closeLangMenu();
+  langBtn.focus();
 });
+langList.addEventListener("keydown", e => {
+  const items = [...langList.querySelectorAll("button")];
+  const i = items.indexOf(document.activeElement);
+  if (e.key === "ArrowDown") { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+  if (e.key === "ArrowUp") { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+  if (e.key === "Escape") { closeLangMenu(); langBtn.focus(); }
+});
+document.addEventListener("click", e => { if (!langList.hidden && !e.target.closest(".lang")) closeLangMenu(); });
+
+function applyLang() {
+  const info = LANGS.find(l => l.code === lang);
+  const dict = I18N[lang] || {};
+  i18nEls.forEach(el => {
+    const key = el.dataset.i18n;
+    el.innerHTML = (lang !== "en" && dict[key]) ? dict[key] : english.get(el);
+  });
+  dateEls.forEach(el => { el.textContent = localizeDate(el.dataset.en, lang); });
+  root.lang = info.html;
+  root.dir = info.rtl ? "rtl" : "ltr";
+  langFlag.src = `assets/flags/${info.flag}.svg`;
+  langCode.textContent = info.short;
+  langList.querySelectorAll("button").forEach(b => b.setAttribute("aria-checked", String(b.dataset.lang === lang)));
+  langListeners.forEach(fn => fn(lang));
+}
 
 // ---------------------------------------------------------
 // 2. LIGHT / DARK MODE
@@ -341,6 +246,8 @@ const SITES = [
     sw: { name: "Penn State, Marekani", text: "Mkutano wa Maji wa Penn State, Machi 2026 — wasilisho fupi na bango nilioandika pamoja, viliwasilishwa na K. C. Mercurio." } }
 ];
 
+const siteT = (i, l) => SITES[i][l] || ((window.SITE_TEXT || {})[l] || [])[i] || SITES[i].en;
+
 (function globe() {
   const canvas = document.getElementById("globe");
   if (!canvas || !window.d3 || !window.topojson || !window.WORLD_TOPO) return;
@@ -456,7 +363,7 @@ const SITES = [
 
   function select(i) {
     selected = i;
-    const s = SITES[i], t = s[window.siteLang()];
+    const s = SITES[i], t = siteT(i, window.siteLang());
     animateTo([-s.lonlat[0], -s.lonlat[1], 0], s.lonlat[1] < 10 && s.lonlat[0] > 30 ? 1.6 : 1.3);
     card.innerHTML = `<strong>${esc(t.name)}</strong><p>${esc(t.text)}</p>`;
     card.hidden = false;
@@ -476,11 +383,11 @@ const SITES = [
     legend.innerHTML = "";
     SITES.forEach((s, i) => {
       const li = document.createElement("li");
-      li.innerHTML = `<button type="button"><span class="dot ${s.type === "talk" ? "talk" : ""}"></span><span><strong>${esc(s[l].name)}</strong><small>${esc(s[l].text)}</small></span></button>`;
+      li.innerHTML = `<button type="button"><span class="dot ${s.type === "talk" ? "talk" : ""}"></span><span><strong>${esc(siteT(i, l).name)}</strong><small>${esc(siteT(i, l).text)}</small></span></button>`;
       li.querySelector("button").addEventListener("click", () => select(i));
       legend.appendChild(li);
     });
-    if (selected >= 0) { const t = SITES[selected][l]; card.innerHTML = `<strong>${esc(t.name)}</strong><p>${esc(t.text)}</p>`; legend.querySelectorAll("button")[selected].classList.add("active"); }
+    if (selected >= 0) { const t = siteT(selected, l); card.innerHTML = `<strong>${esc(t.name)}</strong><p>${esc(t.text)}</p>`; legend.querySelectorAll("button")[selected].classList.add("active"); }
   }
 
   // drag to rotate, click a pin to select

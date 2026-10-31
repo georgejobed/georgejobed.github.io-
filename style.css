@@ -728,3 +728,73 @@ ul { list-style: none; }
 /* Gallery: give the wide NTNU photo its natural panoramic height */
 .g-full { grid-row: span 2; }
 @media (max-width: 820px) { .g-full { grid-row: auto; } }
+
+/* =========================================================
+   LANGUAGES: menu with flags, Arabic (right-to-left), fonts
+   ========================================================= */
+.lang { position: relative; }
+.lang-toggle {
+  height: 42px; display: inline-flex; align-items: center; gap: .45rem; padding: 0 .75rem 0 .6rem;
+  border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  font-weight: 700; font-size: .8rem; letter-spacing: .03em; cursor: pointer;
+}
+.lang-toggle img, .lang-list img { border-radius: 3px; box-shadow: 0 0 0 1px rgba(0,0,0,.12); object-fit: cover; }
+.lang-toggle .chev { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
+.lang-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.lang-list {
+  position: absolute; top: calc(100% + 8px); inset-inline-end: 0; z-index: 80; min-width: 190px;
+  list-style: none; padding: .4rem; margin: 0; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,.18);
+}
+.lang-list[hidden] { display: none; }
+.lang-list button {
+  width: 100%; display: flex; align-items: center; gap: .7rem; padding: .6rem .75rem; border: 0; border-radius: 10px;
+  background: transparent; color: var(--text); font-size: .95rem; cursor: pointer; text-align: start;
+}
+.lang-list button:hover, .lang-list button:focus-visible { background: color-mix(in srgb, var(--primary) 10%, transparent); outline: none; }
+.lang-list button[aria-checked="true"] { font-weight: 700; color: var(--primary); }
+.lang-list button[aria-checked="true"]::after { content: "✓"; margin-inline-start: auto; }
+
+/* Fonts for Arabic and Chinese */
+:lang(ar) body, :lang(ar) h1, :lang(ar) h2, :lang(ar) h3, :lang(ar) h4,
+:lang(ar) .logo, :lang(ar) .role, :lang(ar) .venn text, :lang(ar) button, :lang(ar) input, :lang(ar) textarea {
+  font-family: "Noto Sans Arabic", "Inter", system-ui, sans-serif;
+}
+:lang(zh-CN) body, :lang(zh-CN) button, :lang(zh-CN) input, :lang(zh-CN) textarea { font-family: "Inter", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
+:lang(zh-CN) h1, :lang(zh-CN) h2, :lang(zh-CN) h3, :lang(zh-CN) h4, :lang(zh-CN) .role { font-family: "Fraunces", "Noto Sans SC", "PingFang SC", serif; }
+:lang(ar) * { letter-spacing: 0 !important; }           /* spacing breaks Arabic letter joining */
+:lang(ar) body { line-height: 1.85; }
+:lang(ar) .hero h1, :lang(ar) .logo { font-family: "Fraunces", Georgia, serif; }   /* the name stays in Latin letters */
+:lang(ar) i, :lang(zh-CN) i { font-style: italic; }
+
+/* Right-to-left layout for Arabic */
+[dir="rtl"] .map-legend button { text-align: right; }
+[dir="rtl"] .map-legend button:hover, [dir="rtl"] .map-legend button.active { transform: translateX(-4px); }
+[dir="rtl"] .ft-meta { text-align: left; }
+[dir="rtl"] .journey { direction: ltr; }
+[dir="rtl"] .j-item { direction: rtl; text-align: right; }
+[dir="rtl"] .j-item .j-dot { margin-inline-start: 0; }
+[dir="rtl"] .card::before { transform-origin: right; }
+[dir="rtl"] .badge-1 { left: auto; right: -12%; }
+[dir="rtl"] .badge-2 { right: auto; left: -10%; }
+[dir="rtl"] .badge-3 { left: auto; right: 4%; }
+[dir="rtl"] .chat-fab { right: auto; left: 22px; }
+[dir="rtl"] .chat-panel { right: auto; left: 22px; }
+[dir="rtl"] .top-btn { right: auto; left: 30px; }
+[dir="rtl"] .contact-form .btn { justify-self: end; }
+[dir="rtl"] .pub-meta, [dir="rtl"] .pub-venue, [dir="rtl"] .card-meta { direction: rtl; }
+@media (max-width: 820px) {
+  [dir="rtl"] .badge-1 { right: -4%; } [dir="rtl"] .badge-2 { left: -4%; }
+  [dir="rtl"] .top-btn { left: 24px; }
+}
+@media (max-width: 520px) {
+  .lang-toggle { padding: 0 .55rem; gap: .35rem; }
+  .lang-toggle .chev { display: none; }
+}
+
+/* Keep the hidden spam-trap field from stretching the page (important in right-to-left) */
+.hp { position: absolute !important; left: auto !important; right: auto !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+html { overflow-x: clip; }
+.status { border-radius: 18px; }
+bdi { white-space: nowrap; }  /* keep Latin names in brackets together inside Arabic text */
+.card-meta bdi, .pub-meta bdi { white-space: normal; }
